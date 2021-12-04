@@ -1,22 +1,30 @@
 package localhost;
 
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.hamcrest.Matchers.*;
 
 public class ClientsTest {
+
+    @BeforeAll
+    static void setup() {
+        RestAssured.baseURI = "http://localhost:8080";
+        RestAssured.basePath = "/clients";
+    }
 
     @Test
     void testListaClientes_TodosClientesSaoListados() {
         RestAssured.given()
                 .log().all()
                 .when()
-                .get("http://localhost:8080/clients")
+                .get()//pode deixar vazio porque já está setado no BeforeAll
                 .then()
                 .log().all()
                 .statusCode(200);
     }
 
+    /*
     @Test
     void testUnicoClientes_ClienteEListadoComTodasAsInformacoes() {
         RestAssured.given()
@@ -27,13 +35,14 @@ public class ClientsTest {
                 .log().all()
                 .statusCode(200);
     }
+     */
 
     @Test
     void testUnicoClientes_ClienteEListadoComTodasAsInformacoesComBody() {
         RestAssured.given()
                 .log().all()
                 .when()
-                .get("http://localhost:8080/clients/1")
+                .get("/1") //pode botar só o que vem depois de clients na URL porque ela já está setado no BeforeAll
                 .then()
                 .log().all()
                 .statusCode(200)
