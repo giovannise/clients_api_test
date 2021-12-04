@@ -39,13 +39,16 @@ public class ClientsTest {
 
     @Test
     void testUnicoClientes_ClienteEListadoComTodasAsInformacoesComBody() {
+
+        int id = 1;
+
         RestAssured.given()
                 .log().all()
                 .when()
-                .get("/1") //pode botar só o que vem depois de clients na URL porque ela já está setado no BeforeAll
+                .get("/" + id) //pode botar só o que vem depois de clients na URL porque ela já está setado no BeforeAll
                 .then()
                 .log().all()
                 .statusCode(200)
-                .body("id", is(1));
+                .body("id", is(id));
     }
 }
